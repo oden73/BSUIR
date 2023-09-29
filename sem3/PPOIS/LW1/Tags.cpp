@@ -120,10 +120,10 @@ namespace Tags {
 	pair<int, int> Tags::get_empty_cell() { return empty_cell; }
 
 	vector<vector<string>> Tags::get_matrix() {
-		vector<vector<string>> s;
+		vector<vector<string>> obtained_matrix;
 		for (int i = 0; i < tags_size; i++)
-				s.push_back(matrix[i].line_elements);
-		return s;
+				obtained_matrix.push_back(matrix[i].line_elements);
+		return obtained_matrix;
 	}
 
 	void Tags::set_tags_size(int new_size) {
@@ -369,7 +369,7 @@ void print(Tags::Tags t) {
 		cout << "|";
 
 		for (int j = 0; j < line_size; j++) {
-			for (int k = 0; k < 3 - matrix[i][j].size(); k++)
+			for (int empty_space_count = 0; empty_space_count < 3 - matrix[i][j].size(); empty_space_count++)
 				cout << " ";
 			cout << matrix[i][j] << " |";
 		}
