@@ -15,6 +15,11 @@ namespace Tags {
 		return line_elements[index]; 
 	}
 
+	void Tags::TagLine::set_line_elements(vector<string> line_elements) { this->line_elements = line_elements; }
+	void Tags::TagLine::set_line_element(int index, string value) { line_elements[index] = value; }
+	vector<string> Tags::TagLine::get_line_elements() { return line_elements; }
+	string Tags::TagLine::get_line_element(int index) { return line_elements[index]; }
+
 	Tags::TagLine Tags::operator[](int index) {
 		if (index < 0) {
 			throw runtime_error("invalid index");
@@ -75,7 +80,7 @@ namespace Tags {
 		this->line_size = line_size;
 		for (int i = 0; i < matrix.size(); i++) {
 			Tags::TagLine tagline;
-			tagline.line_elements = matrix[i];
+			tagline.set_line_elements(matrix[i]);
 			this->matrix.push_back(tagline);
 		}
 		for (int i = 0; i < this->tags_size; i++)
@@ -122,7 +127,7 @@ namespace Tags {
 	vector<vector<string>> Tags::get_matrix() {
 		vector<vector<string>> obtained_matrix;
 		for (int i = 0; i < tags_size; i++)
-				obtained_matrix.push_back(matrix[i].line_elements);
+			obtained_matrix.push_back(matrix[i].get_line_elements());
 		return obtained_matrix;
 	}
 
@@ -178,7 +183,7 @@ namespace Tags {
 	
 	void Tags::matrix_creation() {
 		TagLine tagline;
-		tagline.line_elements = vector<string>(4);
+		tagline.set_line_elements(vector<string>(4));
 		matrix = vector<TagLine>(tags_size, tagline);
 		vector<pair<int, int>> matrix_indexes;
 		for (int i = 0; i < tags_size; i++)
@@ -190,9 +195,9 @@ namespace Tags {
 		for (int i = 0; i < line_size * tags_size - 1; i++) {
 			int x = matrix_indexes[i].first;
 			int y = matrix_indexes[i].second;
-			matrix[x].line_elements[y] = to_string(i + 1);
+			matrix[x].set_line_element(y, to_string(i + 1));
 		}
-		matrix[empty_cell.first].line_elements[empty_cell.second] = "";
+		matrix[empty_cell.first].set_line_element(empty_cell.second, "");
 	}
 
 	void Tags::movement_up() {
@@ -202,8 +207,8 @@ namespace Tags {
 
 		int x = empty_cell.first;
 		int y = empty_cell.second;
-		matrix[x].line_elements[y] = matrix[x + 1].line_elements[y];
-		matrix[x + 1].line_elements[y] = "";
+		matrix[x].set_line_element(y, matrix[x + 1].get_line_element(y));
+		matrix[x + 1].set_line_element(y, "");
 		empty_cell.first++;
 	}
 
@@ -214,8 +219,8 @@ namespace Tags {
 
 		int x = empty_cell.first;
 		int y = empty_cell.second;
-		matrix[x].line_elements[y] = matrix[x - 1].line_elements[y];
-		matrix[x - 1].line_elements[y] = "";
+		matrix[x].set_line_element(y, matrix[x - 1].get_line_element(y));
+		matrix[x - 1].set_line_element(y, "");
 		empty_cell.first--;
 	}
 
@@ -226,8 +231,8 @@ namespace Tags {
 
 		int x = empty_cell.first;
 		int y = empty_cell.second;
-		matrix[x].line_elements[y] = matrix[x].line_elements[y + 1];
-		matrix[x].line_elements[y + 1] = "";
+		matrix[x].set_line_element(y, matrix[x].get_line_element(y + 1));
+		matrix[x].set_line_element(y + 1, "");
 		empty_cell.second++;
 	}
 
@@ -238,8 +243,8 @@ namespace Tags {
 
 		int x = empty_cell.first;
 		int y = empty_cell.second;
-		matrix[x].line_elements[y] = matrix[x].line_elements[y - 1];
-		matrix[x].line_elements[y - 1] = "";
+		matrix[x].set_line_element(y, matrix[x].get_line_element(y - 1));
+		matrix[x].set_line_element(y - 1, "");
 		empty_cell.second--;
 	}
 
@@ -249,7 +254,7 @@ namespace Tags {
 		}
 		tags_size = new_size;
 		TagLine tagline;
-		tagline.line_elements = vector<string>(line_size);
+		tagline.set_line_elements(vector<string>(line_size));
 		vector<TagLine> new_matrix(new_size, tagline);
 		vector<pair<int, int>> matrix_indexes;
 		for (int i = 0; i < new_size; i++)
@@ -260,9 +265,9 @@ namespace Tags {
 		for (int i = 0; i < line_size * tags_size - 1; i++) {
 			int x = matrix_indexes[i].first;
 			int y = matrix_indexes[i].second;
-			new_matrix[x].line_elements[y] = to_string(i + 1);
+			new_matrix[x].set_line_element(y, to_string(i + 1));
 		}
-		new_matrix[empty_cell.first].line_elements[empty_cell.second] = "";
+		new_matrix[empty_cell.first].set_line_element(empty_cell.second, "");
 		matrix = new_matrix;
 	}
 	
@@ -276,7 +281,7 @@ namespace Tags {
 			for (int i = 0; i < line_size; i++)
 				line_numbers.push_back(to_string(new_numbers[i]));
 			TagLine tagline;
-			tagline.line_elements = line_numbers;
+			tagline.set_line_elements(line_numbers);
 			matrix.push_back(tagline);
 		}
 		tags_size = new_size;
@@ -288,7 +293,7 @@ namespace Tags {
 		}
 		line_size = new_size;
 		TagLine tagline;
-		tagline.line_elements = vector<string>(line_size);
+		tagline.set_line_elements(vector<string>(line_size));
 		vector<TagLine> new_matrix(tags_size, tagline);
 		vector<pair<int, int>> matrix_indexes;
 		for (int i = 0; i < tags_size; i++)
@@ -299,9 +304,9 @@ namespace Tags {
 		for (int i = 0; i < line_size * tags_size - 1; i++) {
 			int x = matrix_indexes[i].first;
 			int y = matrix_indexes[i].second;
-			new_matrix[x].line_elements[y] = to_string(i + 1);
+			new_matrix[x].set_line_element(y, to_string(i + 1));
 		}
-		new_matrix[empty_cell.first].line_elements[empty_cell.second] = "";
+		new_matrix[empty_cell.first].set_line_element(empty_cell.second, "");
 		matrix = new_matrix;
 	}
 
@@ -311,8 +316,11 @@ namespace Tags {
 			new_numbers.push_back(i);
 		random_shuffle(new_numbers.begin(), new_numbers.end());
 		for (int i = 0; i < tags_size; i++)
-			for (int j = 0; j < new_size - line_size; j++)
-				matrix[i].line_elements.push_back(to_string(new_numbers[i]));
+			for (int j = 0; j < new_size - line_size; j++) {
+				vector<string> tmp_line_elements = matrix[i].get_line_elements();
+				tmp_line_elements.push_back(to_string(new_numbers[i]));
+				matrix[i].set_line_elements(tmp_line_elements);
+			}
 		line_size = new_size;
 	}
 }
