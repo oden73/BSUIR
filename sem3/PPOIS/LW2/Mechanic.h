@@ -18,7 +18,7 @@ namespace AutoRepairShop {
 		virtual void repair_vehicle();
 
 		void get_new_vehicle(Vehicle);
-		void check_equipment_for_breakdown() const; // âûçûâàòü âíóòðè repair
+		void check_equipment_for_breakdown() const; 
 		void go_on_lunch_break() const;
 
 		bool get_is_busy() const;
