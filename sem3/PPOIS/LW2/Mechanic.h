@@ -15,10 +15,10 @@ namespace AutoRepairShop {
 
 		bool operator==(Mechanic other);
 
-		virtual void repair_vehicle(); // cout << fixing.... pause cout << fixing... и тд, если автобус или грузовое, то подольше, а еще с некоторым шансом сделать поломку некоторого оборудования
-		
+		virtual void repair_vehicle();
+
 		void get_new_vehicle(Vehicle);
-		void check_equipment_for_breakdown() const; // вызывать внутри repair
+		void check_equipment_for_breakdown() const; 
 		void go_on_lunch_break() const;
 
 		bool get_is_busy() const;
