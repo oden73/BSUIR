@@ -235,10 +235,3 @@ class KarnaughFor3Arguments(Karnaugh):
         for i in range(len(value) - 1, -1, -1):
             decimal_value += int(value[i]) * pow(2, len(value) - 1 - i)
         return decimal_value
-
-
-# k = KarnaughFor3Arguments('01110001', 'sknf')
-# k.print_table()
-# print(k.form_final_normal_form_fields())
-# print(k.form_final_normal_form_arguments())
-# print(k.final_normal_form())
