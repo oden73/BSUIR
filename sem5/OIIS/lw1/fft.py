@@ -28,18 +28,6 @@ def generate_sine_signal(frequency, length):
     return signal.tolist()
 
 
-def get_user_input():
-    while True:
-        try:
-            user_input = input("Введите значения последовательности: ")
-            signal = [float(i) for i in user_input.split(' ')]
-            break
-        except ValueError:
-            print("Ошибка: пожалуйста, введите корректные числовые значения.")
-
-    return signal
-
-
 if __name__ == "__main__":
     frequency = float(input("Введите частоту сигнала: "))
     length = int(input("Введите количество точек сигнала: "))
