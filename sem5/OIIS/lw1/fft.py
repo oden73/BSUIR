@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
 
 def fft(x):
@@ -27,6 +28,25 @@ def generate_sine_signal(frequency, length):
     signal = np.sin(2 * np.pi * frequency * t)
     return signal.tolist()
 
+def plot_signal(signal, title):
+    plt.figure(figsize=(12, 6))
+    plt.plot(signal)
+    plt.title(title)
+    plt.xlabel('Sample Number')
+    plt.ylabel('Amplitude')
+    plt.grid()
+    plt.show()
+
+
+def plot_spectrum(spectrum, title):
+    plt.figure(figsize=(12, 6))
+    plt.plot(np.abs(spectrum))
+    plt.title(title)
+    plt.xlabel('Frequency Bin')
+    plt.ylabel('Magnitude')
+    plt.grid()
+    plt.show()
+
 
 if __name__ == "__main__":
     frequency = float(input("Введите частоту сигнала: "))
@@ -52,3 +72,6 @@ if __name__ == "__main__":
 
     are_close = np.all(np.isclose(result_custom_fft, result_builtin_fft))
     print("Результаты близки:", are_close)
+
+    plot_spectrum(result_builtin_fft, 'Спектр с использованием np.fft.fft')
+    plot_spectrum(result_custom_fft, 'Спектр с использованием пользовательского FFT')
