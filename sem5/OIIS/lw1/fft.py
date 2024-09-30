@@ -73,5 +73,6 @@ if __name__ == "__main__":
     are_close = np.all(np.isclose(result_custom_fft, result_builtin_fft))
     print("Результаты близки:", are_close)
 
-    plot_spectrum(result_builtin_fft, 'Спектр с использованием np.fft.fft')
-    plot_spectrum(result_custom_fft, 'Спектр с использованием пользовательского FFT')
+    half_N = len(result_builtin_fft) // 2
+    plot_spectrum(result_builtin_fft[:half_N], 'Спектр с использованием np.fft.fft')
+    plot_spectrum(result_custom_fft[:half_N], 'Спектр с использованием пользовательского FFT')
