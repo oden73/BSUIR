@@ -1,33 +1,40 @@
 import tkinter as tk
-from tkinter import ttk
+from tkinter import messagebox
+
+from controller.employee_controller import EmployeeController
 
 
-class AddEmployeeWindow(tk.Tk):
-    def __init__(self, master) -> None:
+class AddEmployeeWindow(tk.Toplevel):
+    def __init__(self):
         super().__init__()
-        self.master = master
-        self.title("Добавление сотрудника")
 
-        # Создание форм ввода
-        tk.Label(self, text="Full Name").grid(row=0, column=0)
-        self.entry_name = tk.Entry(self)
-        self.entry_name.grid(row=0, column=1)
+        self.__controller: EmployeeController = EmployeeController()
 
-        tk.Label(self, text="Age").grid(row=1, column=0)
-        self.entry_age = tk.Entry(self)
-        self.entry_age.grid(row=1, column=1)
+        self.title("Add Employee")
+        tk.Label(self, text="Enter Employee Name").grid(row=0, column=0)
+        self.name_entry = tk.Entry(self)
+        self.name_entry.grid(row=0, column=1)
 
-        tk.Label(self, text="Gender").grid(row=2, column=0)
-        self.entry_gender = tk.Entry(self)
-        self.entry_gender.grid(row=2, column=1)
+        tk.Label(self, text="Enter Employee Age").grid(row=1, column=0)
+        self.age_entry = tk.Entry(self)
+        self.age_entry.grid(row=1, column=1)
 
-        tk.Label(self, text="Marital Status").grid(row=3, column=0)
-        self.entry_marital_status = tk.Entry(self)
-        self.entry_marital_status.grid(row=3, column=1)
+        tk.Label(self, text="Enter Employee Gender").grid(row=2, column=0)
+        self.gender_entry = tk.Entry(self)
+        self.gender_entry.grid(row=2, column=1)
 
-        # Кнопка добавления сотрудника
-        btn_add = tk.Button(self, text="Add", command=self.add_employee)
-        btn_add.grid(row=4, columnspan=2)
+        tk.Label(self, text="Enter Employee Marital Status").grid(row=3, column=0)
+        self.marital_status_entry = tk.Entry(self)
+        self.marital_status_entry.grid(row=3, column=1)
 
-    def add_employee(self) -> None:
-        pass
+        tk.Button(self, text="Submit", command=self.submit).grid(row=4, column=0, columnspan=2)
+
+    def submit(self):
+        name = self.name_entry.get()
+        age = self.age_entry.get()
+        gender = self.gender_entry.get()
+        marital_status = self.marital_status_entry.get()
+        if name and age and gender and marital_status:
+            self.__controller.insert(name, age, gender, marital_status)
+            messagebox.showinfo("Success", "Employee added successfully")
+            self.destroy()
