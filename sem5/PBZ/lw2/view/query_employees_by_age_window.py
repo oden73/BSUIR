@@ -27,8 +27,6 @@ class QueryEmployeesByAgeWindow(tk.Toplevel):
         for row in rows:
             result_tree.insert('', 'end', values=row)
 
-        print(1)
-
         result_tree.pack(fill=tk.BOTH, expand=True)
 
         def close_window():
